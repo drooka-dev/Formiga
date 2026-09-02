@@ -37,19 +37,46 @@ npm run typecheck
 
 ## Construire les binaires
 
-Les builds passent par **EAS Build** (cloud), ce qui permet de produire un `.ipa` iOS depuis Windows,
-sans Mac.
+### Android — en local
+
+Nécessite le SDK Android et un JDK 17+.
+
+```bash
+npx expo prebuild --platform android --clean
+cd android && ./gradlew assembleRelease
+```
+
+L'APK sort dans `android/app/build/outputs/apk/release/`. Le dossier `android/` est généré et
+ignoré par git : `prebuild` le recrée à partir de `app.json`.
+
+Cet APK est signé avec la **clé de debug** fournie par le gabarit Expo. Il s'installe sans problème
+par sideload, mais le Play Store le refusera : pour publier, il faut générer sa propre clé de
+signature et la conserver — la perdre interdit toute mise à jour ultérieure de l'application sous la
+même identité.
+
+### iOS
+
+Un `.ipa` **ne peut pas être produit depuis Windows** : la compilation iOS exige macOS et Xcode, et
+un binaire installable exige un compte Apple Developer (99 $/an) pour le provisioning. Les deux
+chemins possibles :
 
 ```bash
 npm install -g eas-cli
 eas login
-eas build --profile preview --platform android
-eas build --profile production --platform ios
+eas build --profile release --platform ios      # .ipa signé, compte Apple requis
+eas build --profile preview --platform ios      # build simulateur, sans compte Apple
 ```
 
-Le profil `preview` produit un APK installable directement ; `production` produit les binaires
-destinés au Play Store et à l'App Store. Un compte Apple Developer (99 $/an) reste nécessaire pour
-distribuer sur iOS.
+**EAS Build** compile sur des machines macOS distantes, ce qui contourne l'absence de Mac mais pas
+celle du compte Apple. Le profil `preview` produit un build pour le simulateur iOS — utile pour
+tester, mais ce n'est pas un `.ipa` installable sur un iPhone.
+
+### Play Store et App Store
+
+```bash
+eas build --profile production --platform android   # .aab
+eas build --profile production --platform ios       # .ipa signé pour l'App Store
+```
 
 ## Architecture
 
