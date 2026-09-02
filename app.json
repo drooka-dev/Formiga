@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "Formiga",
+    "slug": "Formiga",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.formiga.budget"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#80CDDF",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "com.formiga.budget"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#80CDDF",
+          "dark": {
+            "backgroundColor": "#0F4A3E"
+          }
+        }
+      ]
+    ],
+    "scheme": "formiga",
+    "newArchEnabled": true
+  }
+}
