@@ -1,13 +1,21 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
-import { Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useT } from '../../src/i18n';
 import { useTheme } from '../../src/theme';
 
+/** Hauteur de la barre elle-même, hors zone réservée au système. */
+const TAB_BAR_HEIGHT = 64;
+
 export default function TabsLayout() {
   const { colors } = useTheme();
   const t = useT();
+  // L'application dessine sous les barres système (edge-to-edge). Sans cette
+  // marge, la navigation à trois boutons d'Android recouvre les onglets — et
+  // l'indicateur d'accueil d'iOS ferait de même.
+  const insets = useSafeAreaInsets();
+
   return (
     <Tabs
       screenOptions={{
@@ -17,9 +25,9 @@ export default function TabsLayout() {
         tabBarStyle: {
           backgroundColor: colors.surface,
           borderTopColor: colors.border,
-          height: Platform.OS === 'ios' ? 86 : 64,
+          height: TAB_BAR_HEIGHT + insets.bottom,
           paddingTop: 6,
-          paddingBottom: Platform.OS === 'ios' ? 28 : 8,
+          paddingBottom: insets.bottom + 8,
         },
         tabBarLabelStyle: { fontSize: 11, fontWeight: '600' },
       }}

@@ -60,7 +60,7 @@ export default function CashflowScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.bg }}>
-      <View style={[s.topBar, { paddingTop: insets.top > 0 ? spacing(3) : spacing(5) }]}>
+      <View style={[s.topBar, { paddingTop: insets.top + spacing(3) }]}>
         <Pressable onPress={() => router.back()} hitSlop={10}>
           <Ionicons name="close" size={24} color={colors.inkSoft} />
         </Pressable>

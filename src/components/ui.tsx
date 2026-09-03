@@ -28,7 +28,10 @@ export function Screen({
   const { frameWidth } = useLayout();
   const padding = {
     paddingTop: insets.top + spacing(2),
-    paddingBottom: spacing(28),
+    // De quoi passer sous la barre d'onglets, qui grandit elle aussi de la
+    // hauteur réservée au système : sans ce terme, le dernier bloc de la page
+    // finit caché derrière la navigation d'Android.
+    paddingBottom: spacing(24) + insets.bottom,
     maxWidth: frameWidth,
   };
 
